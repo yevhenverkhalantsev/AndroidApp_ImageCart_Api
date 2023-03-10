@@ -9,5 +9,14 @@
         android:id="@+id/imagesFragment"
         android:name="com.example.artphoto.images.view.ImagesFragment"
         android:label="fragment_images"
-        tools:layout="@layout/fragment_images" />
+        tools:layout="@layout/fragment_images" >
+        <action
+            android:id="@+id/action_imagesFragment_to_selectedImageFragment"
+            app:destination="@id/selectedImageFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/selectedImageFragment"
+        android:name="com.example.artphoto.selected.view.SelectedImageFragment"
+        android:label="fragment_selected_image"
+        tools:layout="@layout/fragment_selected_image" />
 </navigation>
