@@ -29,7 +29,7 @@ interface ArtPhotosApiService {
         var retrofit: ArtPhotosApiService? = null
         const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 
-        fun getInstance(): ArtPhotosApiService { //
+        fun getInstance(): ArtPhotosApiService {
             if (retrofit == null) {
                 val logLevel: HttpLoggingInterceptor.Level = HttpLoggingInterceptor.Level.BODY
                 val interceptor = HttpLoggingInterceptor()

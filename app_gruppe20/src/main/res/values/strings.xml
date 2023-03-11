@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">artPhoto</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="topText">Bestill innrammede bilder</string>
+    <string name="chooseImage">VELG BILDE</string>
+    <string name="totalPrice">Totalpris:</string>
+    <string name="amountImages">Antall valgte bilder:</string>
+    <string name="cart">Handlekurv:</string>
+    <string name="checkout">SEND BESTILLING</string>
+    <string name="authors_name_static">Ola Nordmann</string>
 </resources>

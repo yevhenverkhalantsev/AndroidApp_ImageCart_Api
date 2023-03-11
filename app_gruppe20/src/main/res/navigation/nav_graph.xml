@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/imagesFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/imagesFragment"
@@ -18,5 +18,21 @@
         android:id="@+id/selectedImageFragment"
         android:name="com.example.artphoto.selected.view.SelectedImageFragment"
         android:label="fragment_selected_image"
-        tools:layout="@layout/fragment_selected_image" />
+        tools:layout="@layout/fragment_selected_image" >
+        <action
+            android:id="@+id/action_selectedImageFragment_to_imagesFragment"
+            app:destination="@id/imagesFragment" />
+        <action
+            android:id="@+id/action_selectedImageFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.artphoto.home.view.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_imagesFragment"
+            app:destination="@id/imagesFragment" />
+    </fragment>
 </navigation>

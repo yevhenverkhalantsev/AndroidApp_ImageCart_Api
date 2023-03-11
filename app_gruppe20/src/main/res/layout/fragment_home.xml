@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".home.view.HomeFragment">
+
+    <TextView
+        android:id="@+id/HomeTextView"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/topText"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:contentDescription="@null"
+        android:id="@+id/PyntView"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/skjermbilde_pynt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/HomeTextView" />
+
+    <Button
+        android:id="@+id/chooseImageButton"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/chooseImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/PyntView" />
+
+    <TextView
+        android:id="@+id/TotalPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/totalPrice"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/chooseImageButton"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/AmountImages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/amountImages"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/TotalPrice"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/Cart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cart"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/AmountImages"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chosenImagesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/Cart" />
+
+    <Button
+        android:id="@+id/checkoutButton"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/checkout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chosenImagesRecyclerView" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,12 @@
 package com.example.artphoto.images.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.artphoto.R
 import com.example.artphoto.databinding.FragmentImagesBinding
@@ -38,13 +40,15 @@ class ImagesFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        val myFactory = MyImagesViewModelFactory(ImagesRepository(ArtPhotosApiService.getInstance()))
-        viewModel = myFactory.create(ImagesViewModel::class.java)
+        viewModel = ViewModelProvider(this, MyImagesViewModelFactory(
+            ImagesRepository(ArtPhotosApiService.getInstance())))[ImagesViewModel::class.java]
     }
 
     private fun initRecycler() {
         recycler = ImageRecyclerView {
             viewModel.selectedPhoto = it
+            Log.i("test", "viewModel BEFORE = ${viewModel}")
+            Log.i("REST", "Selected photo: ${viewModel.selectedPhoto}")
             findNavController().navigate(R.id.action_imagesFragment_to_selectedImageFragment)
         }
         binding.recyclerView.adapter = recycler

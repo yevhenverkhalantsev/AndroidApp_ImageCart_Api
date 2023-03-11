@@ -5,7 +5,9 @@
 
     <ImageView
         android:id="@+id/raw_art_photo"
+        android:scaleType="fitStart"
+        android:adjustViewBounds="true"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="180dp"/>
 
 </FrameLayout>
