@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -63,13 +65,12 @@
         app:layout_constraintTop_toBottomOf="@id/AmountImages"
         app:layout_constraintStart_toStartOf="parent" />
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chosenImagesRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/Cart" />
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chosenImagesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/Cart"
+                app:layout_constraintBottom_toTopOf="@id/checkoutButton"/>
     <Button
         android:id="@+id/checkoutButton"
         android:layout_width="250dp"
@@ -77,21 +78,6 @@
         android:text="@string/checkout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chosenImagesRecyclerView" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

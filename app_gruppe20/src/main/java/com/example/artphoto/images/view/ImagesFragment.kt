@@ -12,7 +12,6 @@ import com.example.artphoto.R
 import com.example.artphoto.databinding.FragmentImagesBinding
 import com.example.artphoto.images.view.recyclerview.ImageRecyclerView
 import com.example.artphoto.images.viewmodel.ImagesViewModel
-import com.example.artphoto.images.viewmodel.MyImagesViewModelFactory
 import com.example.artphoto.images.viewmodel.repository.ArtPhotosApiService
 import com.example.artphoto.images.viewmodel.repository.ImagesRepository
 
@@ -26,13 +25,16 @@ class ImagesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentImagesBinding.bind(view)
 
+
         initViewModel()
         initRecycler()
         getPhotos()
     }
 
     private fun getPhotos() {
-        viewModel.getPhotos()
+        if (viewModel.photos.value == null) {
+            viewModel.getPhotos()
+        }
         viewModel.photos.observe(viewLifecycleOwner) {
 
             recycler.submitList(it)
@@ -40,8 +42,7 @@ class ImagesFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(this, MyImagesViewModelFactory(
-            ImagesRepository(ArtPhotosApiService.getInstance())))[ImagesViewModel::class.java]
+        viewModel = ImagesViewModel.getInstance(ImagesRepository(ArtPhotosApiService.getInstance()))
     }
 
     private fun initRecycler() {

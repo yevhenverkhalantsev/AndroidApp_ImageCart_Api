@@ -8,4 +8,13 @@
     <string name="cart">Handlekurv:</string>
     <string name="checkout">SEND BESTILLING</string>
     <string name="authors_name_static">Ola Nordmann</string>
+    <string name="treramme">Treramme</string>
+    <string name="s_lvramme">Sølvramme</string>
+    <string name="gullramme">Gullramme</string>
+    <string name="lite">Lite</string>
+    <string name="medium">Medium</string>
+    <string name="stort">Stort</string>
+    <string name="legg_i_handlekurv">LEGG I HANDLEKURV</string>
+    <string name="forrige">FORRIGE</string>
+    <string name="sølvramme">Sølvramme</string>
 </resources>

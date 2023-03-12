@@ -2,13 +2,11 @@ package com.example.artphoto.images.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.artphoto.images.model.ArtAlbum
-import com.example.artphoto.images.model.ArtArtist
-import com.example.artphoto.images.model.ArtPhoto
+import com.example.artphoto.images.model.*
 import com.example.artphoto.images.viewmodel.repository.ImagesRepository
 import kotlinx.coroutines.*
 
-class ImagesViewModel(private val repository: ImagesRepository): ViewModel() {
+class ImagesViewModel private constructor(private val repository: ImagesRepository): ViewModel() {
     private val _photos = MutableLiveData<List<ArtPhoto>>()
     val photos get() = _photos
     var selectedPhoto: ArtPhoto? = null
@@ -18,6 +16,9 @@ class ImagesViewModel(private val repository: ImagesRepository): ViewModel() {
 
     private val _selectedAuthor = MutableLiveData<ArtArtist>()
     val selectedAAuthor get() = _selectedAuthor
+
+    private val _cart = MutableLiveData<MutableList<CartPhoto>>()
+    val cart get() = _cart
 
 
     fun getPhotos() {
@@ -48,14 +49,29 @@ class ImagesViewModel(private val repository: ImagesRepository): ViewModel() {
         }
     }
 
+    fun addToCart(frame: Frame, size: Size) {
+        viewModelScope.launch {
+        if (_cart.value == null) _cart.value = mutableListOf()
+        _cart.value!!.add(CartPhoto(selectedPhoto!!, frame, size, countPrice(frame, size)))
+        }
 
-}
-class MyImagesViewModelFactory(private val repository: ImagesRepository): ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return if (modelClass.isAssignableFrom(ImagesViewModel::class.java)) {
-            ImagesViewModel(repository) as T
-        } else {
-            throw IllegalArgumentException("ViewModel Not Found")
+    }
+
+    private fun countPrice(frame: String, size: String): Int {
+
+    }
+
+
+    companion object {
+        private var instance: ImagesViewModel? = null
+
+        fun getInstance(repository: ImagesRepository): ImagesViewModel {
+            if (instance == null) {
+                instance = ImagesViewModel(repository)
+            }
+            return instance!!
         }
     }
+
+
 }

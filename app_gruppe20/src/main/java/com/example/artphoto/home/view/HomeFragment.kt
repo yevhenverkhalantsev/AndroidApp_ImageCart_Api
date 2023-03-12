@@ -5,9 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.navigation.fragment.findNavController
 import com.example.artphoto.R
 import com.example.artphoto.databinding.FragmentHomeBinding
+import com.example.artphoto.databinding.FragmentImagesBinding
+import com.example.artphoto.images.view.recyclerview.ImageRecyclerView
+import com.example.artphoto.images.viewmodel.ImagesViewModel
+import com.example.artphoto.images.viewmodel.repository.ArtPhotosApiService
+import com.example.artphoto.images.viewmodel.repository.ImagesRepository
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null

@@ -3,6 +3,23 @@ package com.example.artphoto.images.model
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+data class Frame(
+    val name: String,
+    val price: Int
+)
+
+data class Size(
+    val name: String,
+    val dimensions: String,
+    val price: Int
+)
+
+data class CartPhoto(
+    val photo: ArtPhoto,
+    val frame: Frame,
+    val size: Size,
+    val price: Int
+)
 @JsonClass(generateAdapter = true)
 data class ArtPhoto(
     @Json(name = "albumId") val albumId: Int=-1,
