@@ -17,4 +17,8 @@
     <string name="legg_i_handlekurv">LEGG I HANDLEKURV</string>
     <string name="forrige">FORRIGE</string>
     <string name="sølvramme">Sølvramme</string>
+    <string name="title">Title</string>
+    <string name="size">Size</string>
+    <string name="frame">Frame</string>
+    <string name="price">Price</string>
 </resources>

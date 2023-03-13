@@ -18,13 +18,21 @@ import com.example.artphoto.images.viewmodel.repository.ImagesRepository
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var viewModel: ImagesViewModel
+
+    private fun initViewModel() {
+        viewModel = ImagesViewModel.getInstance(ImagesRepository(ArtPhotosApiService.getInstance()))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
+
+
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,6 +41,9 @@ class HomeFragment : Fragment() {
         binding.chooseImageButton.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_imagesFragment)
         }
+
+        initViewModel()
+
     }
 
     override fun onDestroyView() {

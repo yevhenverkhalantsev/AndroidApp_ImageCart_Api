@@ -21,6 +21,8 @@ class ImagesViewModel private constructor(private val repository: ImagesReposito
     val cart get() = _cart
 
 
+
+
     fun getPhotos() {
         viewModelScope.launch {
             _photos.postValue(repository.getPhotos()) }
@@ -57,10 +59,10 @@ class ImagesViewModel private constructor(private val repository: ImagesReposito
 
     }
 
-    private fun countPrice(frame: String, size: String): Int {
+    private fun countPrice(frame: Frame, size: Size): Int {
 
+        return frame.price + size.price + 100
     }
-
 
     companion object {
         private var instance: ImagesViewModel? = null

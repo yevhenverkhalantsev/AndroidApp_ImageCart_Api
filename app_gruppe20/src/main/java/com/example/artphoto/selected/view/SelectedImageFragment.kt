@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.artphoto.R
@@ -61,19 +60,22 @@ class SelectedImageFragment : Fragment() {
     }
 
     private fun generateSize(): Size {
-        when (binding.radioStRrelse.checkedRadioButtonId) {
-            R.id.radioLite -> return Size("Lite", "20x20", 30)
-            R.id.radioMedium -> return Size("Medium", "30x30", 80)
-            R.id.radioStort -> return Size("Stort", "30x30", 150)
+        return when (binding.radioStRrelse.checkedRadioButtonId) {
+            R.id.radioLite -> Size("Lite", "20x20", 30)
+            R.id.radioMedium -> Size("Medium", "30x30", 80)
+            R.id.radioStort -> Size("Stort", "30x30", 150)
+            else -> Size("0", "0", 0)
+        }
     }
 
 
     private fun generateFrame(): Frame {
-        when (binding.radioRammer.checkedRadioButtonId) {
-            R.id.radioTreramme -> return Frame("Treramme",  10)
-            R.id.radioSølvramme -> return Frame("Sølvramme",  50)
-            R.id.radioGullramme -> return Frame("Gullramme",  120)
-    }
+        return when (binding.radioRammer.checkedRadioButtonId) {
+            R.id.radioTreramme -> Frame("Treramme",  10)
+            R.id.radioSølvramme -> Frame("Sølvramme",  50)
+            R.id.radioGullramme -> Frame("Gullramme",  120)
+            else -> Frame("0",  0)
+        }
     }
 
     private fun areOptionsSelected(): Boolean {
@@ -104,7 +106,7 @@ class SelectedImageFragment : Fragment() {
             Log.i("TEST", "Selected photo: ${viewModel.selectedPhoto}")
             viewModel.getAlbumWithArtist(viewModel.selectedPhoto!!.albumId)
             viewModel.selectedAAuthor.observe(viewLifecycleOwner) {
-                Log.i("REST", "Artist = ${it}")
+                Log.i("REST", "Artist = $it")
                 binding.authorName.text = it.name
                 binding.authorMail.text = it.email
                 Glide.with(requireContext())
