@@ -63,7 +63,7 @@ class SelectedImageFragment : Fragment() {
         return when (binding.radioStRrelse.checkedRadioButtonId) {
             R.id.radioLite -> Size("Lite", "20x20", 30)
             R.id.radioMedium -> Size("Medium", "30x30", 80)
-            R.id.radioStort -> Size("Stort", "30x30", 150)
+            R.id.radioStort -> Size("Stort", "50x50", 150)
             else -> Size("0", "0", 0)
         }
     }
@@ -80,11 +80,11 @@ class SelectedImageFragment : Fragment() {
 
     private fun areOptionsSelected(): Boolean {
         if (binding.radioRammer.checkedRadioButtonId == -1) {
-            Toast.makeText(requireContext(), "Please select a frame", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Vennligst velg en ramme.", Toast.LENGTH_SHORT).show()
         }
         else {
             if (binding.radioStRrelse.checkedRadioButtonId == -1) {
-                Toast.makeText(requireContext(), "Please select a size", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Vennligst velg en størrelse.", Toast.LENGTH_SHORT).show()
             }
             else return true
         }
@@ -93,8 +93,6 @@ class SelectedImageFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel = ImagesViewModel.getInstance(ImagesRepository(ArtPhotosApiService.getInstance()))
-        //val myFactory = MyImagesViewModelFactory(ImagesRepository(ArtPhotosApiService.getInstance()))
-        //viewModel = myFactory.create(ImagesViewModel::class.java)
         requestAlbumInfo()
     }
 

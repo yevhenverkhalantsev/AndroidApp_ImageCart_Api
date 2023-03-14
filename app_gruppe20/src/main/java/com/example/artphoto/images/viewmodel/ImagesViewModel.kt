@@ -1,7 +1,9 @@
 package com.example.artphoto.images.viewmodel
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
+import com.example.artphoto.R
 import com.example.artphoto.images.model.*
 import com.example.artphoto.images.viewmodel.repository.ImagesRepository
 import kotlinx.coroutines.*
@@ -20,28 +22,16 @@ class ImagesViewModel private constructor(private val repository: ImagesReposito
     private val _cart = MutableLiveData<MutableList<CartPhoto>>()
     val cart get() = _cart
 
+    fun resetCart() {
+        _cart.value?.clear()
 
+    }
 
 
     fun getPhotos() {
         viewModelScope.launch {
             _photos.postValue(repository.getPhotos()) }
     }
-
-    fun getAlbum(id: Int) {
-        viewModelScope.launch {
-            _selectedAlbum.postValue(repository.getAlbum(id))
-            // Do something with album, such as post it to a LiveData variable
-        }
-    }
-
-    fun getArtist(id: Int) {
-        viewModelScope.launch {
-            _selectedAuthor.postValue(repository.getArtist(id))
-            // Do something with artist, such as post it to a LiveData variable
-        }
-    }
-
     fun getAlbumWithArtist(albumId: Int) {
         viewModelScope.launch {
             val album = GlobalScope.async { repository.getAlbum(albumId) }
@@ -53,8 +43,16 @@ class ImagesViewModel private constructor(private val repository: ImagesReposito
 
     fun addToCart(frame: Frame, size: Size) {
         viewModelScope.launch {
-        if (_cart.value == null) _cart.value = mutableListOf()
-        _cart.value!!.add(CartPhoto(selectedPhoto!!, frame, size, countPrice(frame, size)))
+            if (_cart.value == null) {
+                _cart.value = mutableListOf()
+                Log.i("test", "Cart was empty but now no!")
+            }
+            _cart.value!!.add(CartPhoto(selectedPhoto!!,
+                frame,
+                size,
+                countPrice(frame, size),
+                artistName = selectedAAuthor.value!!.name))
+            Log.i("test", "Cart: ${_cart.value}")
         }
 
     }

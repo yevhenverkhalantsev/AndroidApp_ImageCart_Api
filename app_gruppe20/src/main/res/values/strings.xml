@@ -3,8 +3,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="topText">Bestill innrammede bilder</string>
     <string name="chooseImage">VELG BILDE</string>
-    <string name="totalPrice">Totalpris:</string>
-    <string name="amountImages">Antall valgte bilder:</string>
+    <string name="amountImages">Antall valgte bilder: %1$d</string>
+    <string name="amount_images">Antall valgte bilder: 0</string>
     <string name="cart">Handlekurv:</string>
     <string name="checkout">SEND BESTILLING</string>
     <string name="authors_name_static">Ola Nordmann</string>
@@ -21,4 +21,10 @@
     <string name="size">Size</string>
     <string name="frame">Frame</string>
     <string name="price">Price</string>
+    <string name="total_price">Totalpris: %1$d</string>
+    <string name="totalPrice">Totalpris: 0.0</string>
+    <string name="choosing_title">Velg rammetype og bildestørrelse</string>
+    <string name="title_price">Pris: kr %1$d</string>
+    <string name="title_size">Størrelse: %1$s</string>
+    <string name="title_frame">Rammetype: %1$s</string>
 </resources>

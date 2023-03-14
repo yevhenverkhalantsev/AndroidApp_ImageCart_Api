@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:text="@string/totalPrice"
         android:textSize="20sp"
+        android:layout_marginStart="5dp"
         app:layout_constraintTop_toBottomOf="@id/chooseImageButton"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -51,8 +52,9 @@
         android:id="@+id/AmountImages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/amountImages"
+        android:text="@string/amount_images"
         android:textSize="20sp"
+        android:layout_marginStart="5dp"
         app:layout_constraintTop_toBottomOf="@id/TotalPrice"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -62,35 +64,29 @@
         android:layout_height="wrap_content"
         android:text="@string/cart"
         android:textSize="20sp"
+        android:layout_marginStart="5dp"
         app:layout_constraintTop_toBottomOf="@id/AmountImages"
         app:layout_constraintStart_toStartOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
 
-                android:id="@+id/chosenImagesRecyclerView"
-                android:layout_width="150dp"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@id/Cart"
-                app:layout_constraintBottom_toTopOf="@id/checkoutButton"
-                tools:ignore="MissingConstraints" />
 
-            <androidx.recyclerview.widget.RecyclerView
-
-                android:id="@+id/descriptionRecyclerView"
-                android:layout_width="250dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/checkoutButton"
-                app:layout_constraintStart_toEndOf="@id/chosenImagesRecyclerView"
-                app:layout_constraintTop_toBottomOf="@id/Cart"
-                tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/checkoutButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:text="@string/checkout"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chosenImagesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/Cart"
+        app:layout_constraintBottom_toTopOf="@id/checkoutButton"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

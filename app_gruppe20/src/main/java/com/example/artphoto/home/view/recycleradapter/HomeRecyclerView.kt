@@ -1,18 +1,15 @@
 package com.example.artphoto.home.view.recycleradapter
 
-import android.provider.ContactsContract.RawContacts.Data
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.artphoto.R
 import com.example.artphoto.images.model.CartPhoto
 
-class HomeRecyclerView(private val onClickImage: View.OnClickListener) : RecyclerView.Adapter<HomeViewHolder>() {
-    private var artPhoto : List<CartPhoto> = listOf()
+class HomeRecyclerView : RecyclerView.Adapter<HomeViewHolder>() {
+    var artPhoto : List<CartPhoto> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -21,7 +18,7 @@ class HomeRecyclerView(private val onClickImage: View.OnClickListener) : Recycle
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
         Log.i("test", "OnCreateViewHolder")
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_home, parent, false)
+            .inflate(R.layout.raw_home, parent, false)
         return HomeViewHolder(view)
     }
 
@@ -29,11 +26,11 @@ class HomeRecyclerView(private val onClickImage: View.OnClickListener) : Recycle
         Log.i("test", "OnBindViewHolder")
 
         val repository = artPhoto[position]
-        holder.title.text = repository.photo.title
         Glide.with(holder.itemView.context).load(repository.photo.thumbnailUrl).into(holder.image)
-        holder.price.text = repository.price.toString()
-        holder.frame.text = repository.frame.name
-        holder.size.text = repository.size.name
+        holder.title.text = repository.photo.title
+        holder.size.text = holder.itemView.context.getString(R.string.title_size, repository.size.name)
+        holder.frame.text = holder.itemView.context.getString(R.string.title_frame, repository.frame.name)
+        holder.price.text = holder.itemView.context.getString(R.string.title_price, repository.price)
 
     }
 

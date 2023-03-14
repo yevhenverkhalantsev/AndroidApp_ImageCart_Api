@@ -18,7 +18,8 @@ data class CartPhoto(
     val photo: ArtPhoto,
     val frame: Frame,
     val size: Size,
-    val price: Int
+    val price: Int,
+    val artistName: String
 )
 @JsonClass(generateAdapter = true)
 data class ArtPhoto(
