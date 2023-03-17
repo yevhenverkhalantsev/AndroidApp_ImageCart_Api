@@ -1,7 +1,6 @@
 package com.example.artphoto.selected.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -101,10 +100,8 @@ class SelectedImageFragment : Fragment() {
             //@TODO show error message
         }
         else {
-            Log.i("TEST", "Selected photo: ${viewModel.selectedPhoto}")
             viewModel.getAlbumWithArtist(viewModel.selectedPhoto!!.albumId)
             viewModel.selectedAAuthor.observe(viewLifecycleOwner) {
-                Log.i("REST", "Artist = $it")
                 binding.authorName.text = it.name
                 binding.authorMail.text = it.email
                 Glide.with(requireContext())

@@ -1,6 +1,5 @@
 package com.example.artphoto.home.view.recycleradapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -16,14 +15,12 @@ class HomeRecyclerView : RecyclerView.Adapter<HomeViewHolder>() {
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
-        Log.i("test", "OnCreateViewHolder")
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.raw_home, parent, false)
         return HomeViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
-        Log.i("test", "OnBindViewHolder")
 
         val repository = artPhoto[position]
         Glide.with(holder.itemView.context).load(repository.photo.thumbnailUrl).into(holder.image)

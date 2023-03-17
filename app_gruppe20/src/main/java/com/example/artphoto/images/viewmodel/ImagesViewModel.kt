@@ -1,9 +1,6 @@
 package com.example.artphoto.images.viewmodel
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.*
-import com.example.artphoto.R
 import com.example.artphoto.images.model.*
 import com.example.artphoto.images.viewmodel.repository.ImagesRepository
 import kotlinx.coroutines.*
@@ -35,7 +32,6 @@ class ImagesViewModel private constructor(private val repository: ImagesReposito
     fun getAlbumWithArtist(albumId: Int) {
         viewModelScope.launch {
             val album = GlobalScope.async { repository.getAlbum(albumId) }
-            Log.i("REST", "album: ${album.await()}")
             _selectedAlbum.value = album.await()
             _selectedAuthor.postValue(repository.getArtist(album.await().userId))
         }
@@ -45,14 +41,12 @@ class ImagesViewModel private constructor(private val repository: ImagesReposito
         viewModelScope.launch {
             if (_cart.value == null) {
                 _cart.value = mutableListOf()
-                Log.i("test", "Cart was empty but now no!")
             }
             _cart.value!!.add(CartPhoto(selectedPhoto!!,
                 frame,
                 size,
                 countPrice(frame, size),
                 artistName = selectedAAuthor.value!!.name))
-            Log.i("test", "Cart: ${_cart.value}")
         }
 
     }

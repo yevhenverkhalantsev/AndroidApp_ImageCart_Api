@@ -3,7 +3,6 @@ package com.example.artphoto.home.view
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -82,7 +81,6 @@ class HomeFragment : Fragment() {
         binding.TotalPrice.text = getString(R.string.total_price, 0)
         binding.AmountImages.text = getString(R.string.amountImages, 0)
         Toast.makeText(requireContext(), "Takk for din bestilling!", Toast.LENGTH_SHORT).show()
-        Log.i("test", "RESET")
     }
 
 
