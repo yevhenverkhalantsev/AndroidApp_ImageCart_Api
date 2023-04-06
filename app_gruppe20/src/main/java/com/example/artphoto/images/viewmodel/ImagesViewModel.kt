@@ -46,7 +46,7 @@ class ImagesViewModel private constructor(private val repository: ImagesReposito
                 frame,
                 size,
                 countPrice(frame, size),
-                artistName = selectedAAuthor.value!!.name))
+                artistName = selectedAAuthor.value!!.name),)
         }
 
     }

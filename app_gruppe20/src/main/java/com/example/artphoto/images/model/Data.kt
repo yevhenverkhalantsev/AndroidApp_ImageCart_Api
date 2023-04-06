@@ -1,5 +1,8 @@
 package com.example.artphoto.images.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -13,13 +16,20 @@ data class Size(
     val dimensions: String,
     val price: Int
 )
+@Entity (tableName = "cart_photo_table")
+data class CartPhotoDB(
+    @PrimaryKey(autoGenerate = true) val id: Int,
+    @ColumnInfo(name = "cart_photo")
+    val cartPhoto: CartPhoto
+)
 
 data class CartPhoto(
     val photo: ArtPhoto,
     val frame: Frame,
     val size: Size,
     val price: Int,
-    val artistName: String
+    val artistName: String,
+    val amount: Int
 )
 @JsonClass(generateAdapter = true)
 data class ArtPhoto(
