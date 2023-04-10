@@ -27,4 +27,5 @@
     <string name="title_price">Pris: kr %1$d</string>
     <string name="title_size">Størrelse: %1$s</string>
     <string name="title_frame">Rammetype: %1$s</string>
+    <string name="price_amount_total_price">Pris per stk.: kr %1$d, Antall: %2$d, Totalt: kr %3$d</string>
 </resources>

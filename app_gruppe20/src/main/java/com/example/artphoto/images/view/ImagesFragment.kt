@@ -12,6 +12,7 @@ import com.example.artphoto.images.view.recyclerview.ImageRecyclerView
 import com.example.artphoto.images.viewmodel.ImagesViewModel
 import com.example.artphoto.images.viewmodel.repository.ArtPhotosApiService
 import com.example.artphoto.images.viewmodel.repository.ImagesRepository
+import com.example.artphoto.room.repository.ArtPhotoDatabase
 
 class ImagesFragment : Fragment() {
     private lateinit var viewModel: ImagesViewModel
@@ -40,7 +41,8 @@ class ImagesFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        viewModel = ImagesViewModel.getInstance(ImagesRepository(ArtPhotosApiService.getInstance()))
+        viewModel = ImagesViewModel.getInstance(ImagesRepository(ArtPhotosApiService.getInstance()),
+            ArtPhotoDatabase.getDB(requireContext()))
     }
 
     private fun initRecycler() {

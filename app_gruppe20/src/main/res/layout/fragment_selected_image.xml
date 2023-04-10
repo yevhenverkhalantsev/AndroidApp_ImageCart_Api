@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="25dp">
+        android:paddingBottom="20dp">
 
 
     <TextView
@@ -105,17 +104,21 @@
     </RadioGroup>
 
         <com.google.android.material.textfield.TextInputLayout
-            app:layout_constraintTop_toBottomOf="@id/AddToCartButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:helperText="Amount"
-            android:hint="SSSS"
-            android:layout_marginHorizontal="20dp">
+            android:layout_height="75dp"
+            android:layout_marginHorizontal="20dp"
+            android:hint="Antall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioRammer"
+            app:layout_constraintBottom_toTopOf="@id/AddToCartButton">
 
             <EditText
+                android:id="@+id/amount"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"/>
+                android:layout_height="match_parent"
+                android:inputType="number"
+                android:hint="@null"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,8 +129,7 @@
         android:layout_marginStart="10dp"
         android:text="@string/legg_i_handlekurv"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioRammer" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/GoBackButton"
@@ -136,8 +138,7 @@
         android:layout_marginEnd="10dp"
         android:text="@string/forrige"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioStørrelse" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

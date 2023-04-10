@@ -10,11 +10,14 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.artphoto.R
 import com.example.artphoto.databinding.FragmentSelectedImageBinding
+import com.example.artphoto.images.model.CartPhoto
+import com.example.artphoto.images.model.CartPhotoDB
 import com.example.artphoto.images.model.Frame
 import com.example.artphoto.images.model.Size
 import com.example.artphoto.images.viewmodel.ImagesViewModel
 import com.example.artphoto.images.viewmodel.repository.ArtPhotosApiService
 import com.example.artphoto.images.viewmodel.repository.ImagesRepository
+import com.example.artphoto.room.repository.ArtPhotoDatabase
 
 class SelectedImageFragment : Fragment() {
     private var _binding: FragmentSelectedImageBinding? = null
@@ -50,12 +53,25 @@ class SelectedImageFragment : Fragment() {
 
     private fun saveSelectedImageToCart() {
         if (areOptionsSelected()) {
-            viewModel.addToCart(
-                frame = generateFrame(),
-                size = generateSize()
+            val frame = generateFrame()
+            val size = generateSize()
+            viewModel.insertPhoto(CartPhotoDB(
+                cartPhoto = CartPhoto(
+                        viewModel.selectedPhoto!!,
+                        frame = frame,
+                        size = size,
+                        countPrice(frame, size),
+                        artistName = viewModel.selectedAAuthor.value!!.name,
+                        amount = binding.amount.text.toString().toInt())
+                )
+
             )
             findNavController().navigate(R.id.action_selectedImageFragment_to_homeFragment)
         }
+    }
+
+    private fun countPrice(frame: Frame, size: Size): Int {
+        return frame.price + size.price + 100
     }
 
     private fun generateSize(): Size {
@@ -85,13 +101,18 @@ class SelectedImageFragment : Fragment() {
             if (binding.radioStRrelse.checkedRadioButtonId == -1) {
                 Toast.makeText(requireContext(), "Vennligst velg en størrelse.", Toast.LENGTH_SHORT).show()
             }
+            else if (binding.amount.text.toString().isEmpty()){
+                Toast.makeText(requireContext(), "Legg til antall bilder", Toast.LENGTH_SHORT).show()
+
+            }
             else return true
         }
         return false
     }
 
     private fun initViewModel() {
-        viewModel = ImagesViewModel.getInstance(ImagesRepository(ArtPhotosApiService.getInstance()))
+        viewModel = ImagesViewModel.getInstance(ImagesRepository(ArtPhotosApiService.getInstance()),
+            ArtPhotoDatabase.getDB(requireContext()))
         requestAlbumInfo()
     }
 

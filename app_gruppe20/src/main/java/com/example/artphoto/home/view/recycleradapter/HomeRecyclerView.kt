@@ -6,9 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.artphoto.R
 import com.example.artphoto.images.model.CartPhoto
+import com.example.artphoto.images.model.CartPhotoDB
 
 class HomeRecyclerView : RecyclerView.Adapter<HomeViewHolder>() {
-    var artPhoto : List<CartPhoto> = listOf()
+    var artPhoto : List<CartPhotoDB> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -21,13 +22,12 @@ class HomeRecyclerView : RecyclerView.Adapter<HomeViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
-
-        val repository = artPhoto[position]
-        Glide.with(holder.itemView.context).load(repository.photo.thumbnailUrl).into(holder.image)
-        holder.title.text = repository.photo.title
-        holder.size.text = holder.itemView.context.getString(R.string.title_size, repository.size.name)
-        holder.frame.text = holder.itemView.context.getString(R.string.title_frame, repository.frame.name)
-        holder.price.text = holder.itemView.context.getString(R.string.title_price, repository.price)
+        val cardPhoto = artPhoto[position].cartPhoto
+        Glide.with(holder.itemView.context).load(cardPhoto.photo.thumbnailUrl).into(holder.image)
+        holder.title.text = cardPhoto.photo.title
+        holder.size.text = holder.itemView.context.getString(R.string.title_size, cardPhoto.size.name)
+        holder.frame.text = holder.itemView.context.getString(R.string.title_frame, cardPhoto.frame.name)
+        holder.price.text = holder.itemView.context.getString(R.string.price_amount_total_price, cardPhoto.price, cardPhoto.amount, cardPhoto.price * cardPhoto.amount)
 
     }
 

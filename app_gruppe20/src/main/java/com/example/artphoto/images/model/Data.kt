@@ -18,7 +18,7 @@ data class Size(
 )
 @Entity (tableName = "cart_photo_table")
 data class CartPhotoDB(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 1,
     @ColumnInfo(name = "cart_photo")
     val cartPhoto: CartPhoto
 )

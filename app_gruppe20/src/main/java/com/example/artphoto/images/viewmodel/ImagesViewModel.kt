@@ -3,9 +3,13 @@ package com.example.artphoto.images.viewmodel
 import androidx.lifecycle.*
 import com.example.artphoto.images.model.*
 import com.example.artphoto.images.viewmodel.repository.ImagesRepository
+import com.example.artphoto.room.repository.ArtPhotoDatabase
 import kotlinx.coroutines.*
 
-class ImagesViewModel private constructor(private val repository: ImagesRepository): ViewModel() {
+class ImagesViewModel private constructor(
+    private val repository: ImagesRepository,
+    private val cartDatabase: ArtPhotoDatabase): ViewModel() {
+
     private val _photos = MutableLiveData<List<ArtPhoto>>()
     val photos get() = _photos
     var selectedPhoto: ArtPhoto? = null
@@ -16,7 +20,7 @@ class ImagesViewModel private constructor(private val repository: ImagesReposito
     private val _selectedAuthor = MutableLiveData<ArtArtist>()
     val selectedAAuthor get() = _selectedAuthor
 
-    private val _cart = MutableLiveData<MutableList<CartPhoto>>()
+    private val _cart = MutableLiveData<MutableList<CartPhotoDB>>()
     val cart get() = _cart
 
     fun resetCart() {
@@ -37,33 +41,39 @@ class ImagesViewModel private constructor(private val repository: ImagesReposito
         }
     }
 
-    fun addToCart(frame: Frame, size: Size) {
-        viewModelScope.launch {
-            if (_cart.value == null) {
-                _cart.value = mutableListOf()
-            }
-            _cart.value!!.add(CartPhoto(selectedPhoto!!,
-                frame,
-                size,
-                countPrice(frame, size),
-                artistName = selectedAAuthor.value!!.name),)
-        }
-
-    }
-
-    private fun countPrice(frame: Frame, size: Size): Int {
-
-        return frame.price + size.price + 100
-    }
-
     companion object {
         private var instance: ImagesViewModel? = null
 
-        fun getInstance(repository: ImagesRepository): ImagesViewModel {
+        fun getInstance(repository: ImagesRepository, database: ArtPhotoDatabase): ImagesViewModel {
             if (instance == null) {
-                instance = ImagesViewModel(repository)
+                instance = ImagesViewModel(repository, database)
             }
             return instance!!
+        }
+    }
+
+
+    fun clearPhotos() {
+        viewModelScope.launch {
+            cartDatabase.photoDao().deleteAll()
+        }
+    }
+
+    fun insertPhoto(cartPhotoDB: CartPhotoDB) {
+        viewModelScope.launch {
+            cartDatabase.photoDao().insert(cartPhotoDB)
+        }
+    }
+
+    fun deleteByItem(cartPhotoDB: CartPhotoDB) {
+        viewModelScope.launch {
+            cartDatabase.photoDao().deleteItem(cartPhotoDB)
+        }
+    }
+
+    fun getPhotosFromCart() {
+        viewModelScope.launch {
+            _cart.postValue(cartDatabase.photoDao().getAllPhotos())
         }
     }
 

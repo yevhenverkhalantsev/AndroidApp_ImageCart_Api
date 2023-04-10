@@ -12,6 +12,6 @@ class HomeViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
     val title: TextView = itemView.findViewById(R.id.title)
     val size: TextView = itemView.findViewById(R.id.size)
     val frame: TextView = itemView.findViewById(R.id.frame)
-    val price: TextView = itemView.findViewById(R.id.price)
+    val price: TextView = itemView.findViewById(R.id.priceAndAmount)
 
 }

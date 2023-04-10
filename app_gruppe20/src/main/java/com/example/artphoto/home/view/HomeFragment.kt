@@ -15,6 +15,7 @@ import com.example.artphoto.home.view.recycleradapter.HomeRecyclerView
 import com.example.artphoto.images.viewmodel.ImagesViewModel
 import com.example.artphoto.images.viewmodel.repository.ArtPhotosApiService
 import com.example.artphoto.images.viewmodel.repository.ImagesRepository
+import com.example.artphoto.room.repository.ArtPhotoDatabase
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -24,7 +25,8 @@ class HomeFragment : Fragment() {
     private lateinit var recyclerAdapter: HomeRecyclerView
 
     private fun initViewModel() {
-        viewModel = ImagesViewModel.getInstance(ImagesRepository(ArtPhotosApiService.getInstance()))
+        viewModel = ImagesViewModel.getInstance(ImagesRepository(ArtPhotosApiService.getInstance()),
+            ArtPhotoDatabase.getDB(requireContext()))
     }
 
     override fun onCreateView(
@@ -89,8 +91,8 @@ class HomeFragment : Fragment() {
         var message = "Kunstner:\n"
 
         viewModel.cart.value!!.forEachIndexed { index, item ->
-            imagesIndex += item.photo.id.toString()
-            message += item.artistName
+            imagesIndex += item.cartPhoto.photo.id.toString()
+            message += item.cartPhoto.artistName
             if (index < viewModel.cart.value!!.size - 1) {
                 imagesIndex += ", "
                 message += ", "
@@ -104,17 +106,26 @@ class HomeFragment : Fragment() {
     }
 
     private fun setRecyclerData() {
+        requestData()
         viewModel.cart.observe(viewLifecycleOwner) {
             recyclerAdapter.artPhoto = it
             binding.TotalPrice.text = getString(R.string.total_price, countTotalPrice())
-            binding.AmountImages.text = getString(R.string.amountImages, it.size)
+            binding.AmountImages.text = getString(R.string.amountImages, countTotalAmount())
         }
+    }
+
+    private fun requestData() {
+        viewModel.getPhotosFromCart()
+    }
+
+    private fun countTotalAmount(): Int {
+        return viewModel.cart.value!!.sumOf { it.cartPhoto.amount }
     }
 
     private fun countTotalPrice(): Int {
         var price = 0
         viewModel.cart.value!!.forEach {
-            price += it.price
+            price += it.cartPhoto.price * it.cartPhoto.amount
         }
         return price
     }

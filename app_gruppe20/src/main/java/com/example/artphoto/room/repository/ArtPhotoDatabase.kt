@@ -5,23 +5,22 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.artphoto.images.model.CartPhotoDB
-import com.example.artphoto.room.dao.artPhotoDao
+import com.example.artphoto.room.dao.ArtPhotoDao
 
 @Database(entities = [CartPhotoDB::class], version = 1)
-abstract class artPhotoDatabase: RoomDatabase() {
-
-    abstract fun photoDao(artPhotoDao: artPhotoDao)
+abstract class ArtPhotoDatabase: RoomDatabase() {
+    abstract fun photoDao(): ArtPhotoDao
 
     companion object {
 
-        private var INSTANCE: artPhotoDatabase? = null
+        private var INSTANCE: ArtPhotoDatabase? = null
 
-        fun getDB(context: Context): artPhotoDatabase {
+        fun getDB(context: Context): ArtPhotoDatabase {
             if (INSTANCE == null) {
-                synchronized(artPhotoDatabase::class) {
+                synchronized(ArtPhotoDatabase::class) {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
-                        artPhotoDatabase::class.java,
+                        ArtPhotoDatabase::class.java,
                         "cart_photo_table"
                     ).build()
                 }
