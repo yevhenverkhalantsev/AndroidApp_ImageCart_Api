@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.artphoto.images.model.CartPhotoDB
+import com.example.artphoto.images.model.*
 import com.example.artphoto.room.dao.ArtPhotoDao
 
-@Database(entities = [CartPhotoDB::class], version = 1)
+@Database(entities = [CartPhotoDB::class, Size::class, Frame::class, ArtPhoto::class], version = 1)
 abstract class ArtPhotoDatabase: RoomDatabase() {
     abstract fun photoDao(): ArtPhotoDao
 
@@ -21,7 +21,7 @@ abstract class ArtPhotoDatabase: RoomDatabase() {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         ArtPhotoDatabase::class.java,
-                        "cart_photo_table"
+                        "photo_database"
                     ).build()
                 }
             }

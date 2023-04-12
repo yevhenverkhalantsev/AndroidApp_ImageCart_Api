@@ -28,4 +28,7 @@
     <string name="title_size">Størrelse: %1$s</string>
     <string name="title_frame">Rammetype: %1$s</string>
     <string name="price_amount_total_price">Pris per stk.: kr %1$d, Antall: %2$d, Totalt: kr %3$d</string>
+    <string name="choose_frame_toast">Vennligst velg en ramme.</string>
+    <string name="choose_size_toast">Vennligst velg en størrelse.</string>
+    <string name="choose_amount_toast">Legg til antall bilder.</string>
 </resources>

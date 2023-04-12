@@ -43,6 +43,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.bind(view)
 
 
+
         binding.chooseImageButton.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_imagesFragment)
         }
@@ -53,6 +54,12 @@ class HomeFragment : Fragment() {
                 Toast.makeText(requireContext(), "Vennligst velg bilder!", Toast.LENGTH_SHORT).show()
             }
         }
+
+        binding.resetButton.setOnClickListener {
+            viewModel.clearPhotos()
+        }
+
+
 
         initViewModel()
         initRecycler()
@@ -91,8 +98,8 @@ class HomeFragment : Fragment() {
         var message = "Kunstner:\n"
 
         viewModel.cart.value!!.forEachIndexed { index, item ->
-            imagesIndex += item.cartPhoto.photo.id.toString()
-            message += item.cartPhoto.artistName
+            imagesIndex += item.photo.id.toString()
+            message += item.cartPhotoDB.artistName
             if (index < viewModel.cart.value!!.size - 1) {
                 imagesIndex += ", "
                 message += ", "
@@ -115,17 +122,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun requestData() {
-        viewModel.getPhotosFromCart()
+        viewModel.getAllCartPhotos()
     }
 
     private fun countTotalAmount(): Int {
-        return viewModel.cart.value!!.sumOf { it.cartPhoto.amount }
+        return viewModel.cart.value!!.sumOf { it.cartPhotoDB.amount }
     }
 
     private fun countTotalPrice(): Int {
         var price = 0
         viewModel.cart.value!!.forEach {
-            price += it.cartPhoto.price * it.cartPhoto.amount
+            price += it.cartPhotoDB.price * it.cartPhotoDB.amount
         }
         return price
     }

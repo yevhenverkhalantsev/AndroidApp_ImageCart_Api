@@ -55,16 +55,16 @@ class SelectedImageFragment : Fragment() {
         if (areOptionsSelected()) {
             val frame = generateFrame()
             val size = generateSize()
-            viewModel.insertPhoto(CartPhotoDB(
+            viewModel.insertPhoto(
                 cartPhoto = CartPhoto(
-                        viewModel.selectedPhoto!!,
+                        photo = viewModel.selectedPhoto!!,
                         frame = frame,
                         size = size,
-                        countPrice(frame, size),
+                    cartPhotoDB = CartPhotoDB(
+                        price =  countPrice(frame, size),
                         artistName = viewModel.selectedAAuthor.value!!.name,
                         amount = binding.amount.text.toString().toInt())
                 )
-
             )
             findNavController().navigate(R.id.action_selectedImageFragment_to_homeFragment)
         }
@@ -76,33 +76,33 @@ class SelectedImageFragment : Fragment() {
 
     private fun generateSize(): Size {
         return when (binding.radioStRrelse.checkedRadioButtonId) {
-            R.id.radioLite -> Size("Lite", "20x20", 30)
-            R.id.radioMedium -> Size("Medium", "30x30", 80)
-            R.id.radioStort -> Size("Stort", "50x50", 150)
-            else -> Size("0", "0", 0)
+            R.id.radioLite -> Size(name = "Lite", dimensions =  "20x20", price =  30)
+            R.id.radioMedium -> Size(name = "Medium", dimensions =  "30x30", price =  80)
+            R.id.radioStort -> Size(name =  "Stort", dimensions =  "50x50", price = 150)
+            else -> Size(name = "0", dimensions =  "0", price =  0)
         }
     }
 
 
     private fun generateFrame(): Frame {
         return when (binding.radioRammer.checkedRadioButtonId) {
-            R.id.radioTreramme -> Frame("Treramme",  10)
-            R.id.radioSølvramme -> Frame("Sølvramme",  50)
-            R.id.radioGullramme -> Frame("Gullramme",  120)
-            else -> Frame("0",  0)
+            R.id.radioTreramme -> Frame(name = "Treramme", price = 10)
+            R.id.radioSølvramme -> Frame(name = "Sølvramme", price = 50)
+            R.id.radioGullramme -> Frame(name = "Gullramme", price =  120)
+            else -> Frame(name = "0", price =   0)
         }
     }
 
     private fun areOptionsSelected(): Boolean {
         if (binding.radioRammer.checkedRadioButtonId == -1) {
-            Toast.makeText(requireContext(), "Vennligst velg en ramme.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.choose_frame_toast), Toast.LENGTH_SHORT).show()
         }
         else {
             if (binding.radioStRrelse.checkedRadioButtonId == -1) {
-                Toast.makeText(requireContext(), "Vennligst velg en størrelse.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.choose_size_toast), Toast.LENGTH_SHORT).show()
             }
             else if (binding.amount.text.toString().isEmpty()){
-                Toast.makeText(requireContext(), "Legg til antall bilder", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.choose_amount_toast), Toast.LENGTH_SHORT).show()
 
             }
             else return true
