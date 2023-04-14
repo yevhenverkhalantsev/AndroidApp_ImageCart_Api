@@ -6,14 +6,14 @@ import com.squareup.moshi.JsonClass
 
 @Entity(tableName = "frame_table")
 data class Frame(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "frame_id") val id: Int = 1,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "frame_id") val id: Int = 0,
     val name: String,
     val price: Int
 )
 
 @Entity(tableName = "size_table")
 data class Size(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "size_id") val id: Int = 1,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "size_id") val id: Int = 0,
     val name: String,
     val dimensions: String,
     val price: Int
@@ -40,7 +40,7 @@ data class CartPhoto(
 
 @Entity(tableName = "cart_photo_table")
 data class CartPhotoDB(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "cart_photo_id") val id: Int = 1,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "cart_photo_id") val id: Int = 0,
     val price: Int,
     val artistName: String,
     val amount: Int
@@ -51,7 +51,7 @@ data class CartPhotoDB(
 @JsonClass(generateAdapter = true)
 @Entity(tableName = "art_photo_table")
 data class ArtPhoto(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "art_id") val db_id: Int = 1,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "art_id") val db_id: Int = 0,
     @Json(name = "id") val id: Int = 1,
     @Json(name = "albumId") @ColumnInfo(name = "album_id") val albumId: Int=-1,
     @Json(name = "title") val title: String="undefined",

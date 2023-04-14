@@ -1,6 +1,7 @@
 package com.example.artphoto.home.view.recycleradapter
 
 import android.view.View
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -13,5 +14,6 @@ class HomeViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
     val size: TextView = itemView.findViewById(R.id.size)
     val frame: TextView = itemView.findViewById(R.id.frame)
     val price: TextView = itemView.findViewById(R.id.priceAndAmount)
+    val checkBox: CheckBox = itemView.findViewById(R.id.rawCheckBox)
 
 }

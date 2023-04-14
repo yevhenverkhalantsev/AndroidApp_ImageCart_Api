@@ -1,5 +1,6 @@
 package com.example.artphoto.images.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.artphoto.images.model.*
 import com.example.artphoto.images.viewmodel.repository.ImagesRepository
@@ -20,7 +21,7 @@ class ImagesViewModel private constructor(
     private val _selectedAuthor = MutableLiveData<ArtArtist>()
     val selectedAAuthor get() = _selectedAuthor
 
-    private val _cart = MutableLiveData<MutableList<CartPhoto>>()
+    private val _cart = MutableLiveData<MutableList<CartPhoto>?>()
     val cart get() = _cart
 
     fun resetCart() {
@@ -54,8 +55,11 @@ class ImagesViewModel private constructor(
 
 
     fun clearPhotos() {
+
+        //CoroutineScope()
         viewModelScope.launch {
-            cartDatabase.photoDao().deleteAll()
+            cartDatabase.photoDao().deleteAllTables()
+            _cart.value?.clear()
             //@TODO clear cart
         }
     }
@@ -80,14 +84,27 @@ class ImagesViewModel private constructor(
     fun getAllCartPhotos() {
         CoroutineScope(Dispatchers.IO).launch {
             cart.postValue(cartDatabase.photoDao().getAllCartPhotos())
+
+//            insertArtPhoto()
+//            insertFrame()
+//            insertSize()
         }
     }
 
-    fun deleteByItem(cartPhotoDB: CartPhoto) {
-//        viewModelScope.launch {
-//            cartDatabase.photoDao().deleteItem(cartPhotoDB)
-//        }
+    fun deleteSelectedPhotos(selectedCartPhotos: MutableList<CartPhoto>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val ids = mutableListOf<Int>()
+            selectedCartPhotos.forEach { ids.add(it.cartPhotoDB.id) }
+            cartDatabase.photoDao().deleteSelectedPhotos(ids)
+            //_cart.postValue(cartDatabase.photoDao().getAllCartPhotos())
+        }
     }
+
+//    fun deleteByItem(cartPhotoDB: CartPhoto) {
+//        viewModelScope.launch {
+//            cartDatabase.photoDao().deleteById(cartPhotoDB.cartPhotoDB)
+//        }
+//    }
 
 
 
