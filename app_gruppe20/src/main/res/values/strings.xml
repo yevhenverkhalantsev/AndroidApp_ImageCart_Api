@@ -31,4 +31,5 @@
     <string name="choose_frame_toast">Vennligst velg en ramme.</string>
     <string name="choose_size_toast">Vennligst velg en størrelse.</string>
     <string name="choose_amount_toast">Legg til antall bilder.</string>
+    <string name="invalid_quantity_toast">Vennligst velg et antall større enn 0.</string>
 </resources>

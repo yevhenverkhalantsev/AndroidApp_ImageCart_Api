@@ -52,14 +52,14 @@ class SelectedImageFragment : Fragment() {
     }
 
     private fun saveSelectedImageToCart() {
-        if (areOptionsSelected()) {
+        if (areOptionsSelected() && binding.amount.text.toString().toInt() > 0) {
             val frame = generateFrame()
             val size = generateSize()
             viewModel.insertPhoto(
                 cartPhoto = CartPhoto(
-                        photo = viewModel.selectedPhoto!!,
-                        frame = frame,
-                        size = size,
+                    photo = viewModel.selectedPhoto!!,
+                    frame = frame,
+                    size = size,
                     cartPhotoDB = CartPhotoDB(
                         price =  countPrice(frame, size),
                         artistName = viewModel.selectedAAuthor.value!!.name,
@@ -103,8 +103,11 @@ class SelectedImageFragment : Fragment() {
             }
             else if (binding.amount.text.toString().isEmpty()){
                 Toast.makeText(requireContext(), getString(R.string.choose_amount_toast), Toast.LENGTH_SHORT).show()
-
             }
+            else if (binding.amount.text.toString().toInt() == 0) {
+            Toast.makeText(requireContext(), getString(R.string.invalid_quantity_toast), Toast.LENGTH_SHORT).show()
+            }
+
             else return true
         }
         return false

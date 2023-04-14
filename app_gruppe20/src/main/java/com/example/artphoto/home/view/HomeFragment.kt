@@ -95,29 +95,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun sendBuyingMessage() {
-        Glide.with(requireContext())
-            .load("https://www.google.es/images/srpr/logo11w.png") // your URL
-            //.bi()
-            .into(object : SimpleTarget<Bitmap?>(100, 100) {
-                fun onResourceReady(resource: Bitmap, glideAnimation: GlideAnimation?) {
-                    val f = File(context!!.cacheDir, filename) // use your filename fully
-                    f.createNewFile()
-                    //Convert bitmap to byte array
-                    val bos = ByteArrayOutputStream()
-                    resource.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos)
-                    val bitmapdata: ByteArray = bos.toByteArray()
-                    //write the bytes in file
-                    val fos = FileOutputStream(f)
-                    fos.write(bitmapdata)
-                    fos.flush()
-                    fos.close()
-                    val U = Uri.fromFile(f)
-                    val i = Intent(Intent.ACTION_SEND)
-                    i.type = "image/png"
-                    i.putExtra(Intent.EXTRA_STREAM, U)
-                    startActivity(Intent.createChooser(i, "Email:"))
-                }
-            })
 
             val intent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:" + "yve001@uit.no")
