@@ -2,8 +2,6 @@ package com.example.artphoto.home.view
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Bitmap.CompressFormat
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,8 +10,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.SimpleTarget
 import com.example.artphoto.R
 import com.example.artphoto.databinding.FragmentHomeBinding
 import com.example.artphoto.home.view.recycleradapter.HomeRecyclerView
@@ -55,6 +51,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.checkoutButton.setOnClickListener {
+            viewModel.clearPhotos()
             if (!cartIsEmpty()) sendBuyingMessage()
             else {
                 Toast.makeText(requireContext(), "Vennligst velg bilder!", Toast.LENGTH_SHORT).show()
@@ -133,7 +130,7 @@ class HomeFragment : Fragment() {
                 message += ". "
             }
         }
-        return message + imagesIndex + "\nTotalpris:\n" + countTotalPrice(recyclerAdapter.artPhoto)
+        return "$message$imagesIndex\nTotalpris:\n" + countTotalPrice(recyclerAdapter.artPhoto)
             .toString() + "."
     }
 
@@ -180,10 +177,6 @@ class HomeFragment : Fragment() {
         binding.chosenImagesRecyclerView.adapter = recyclerAdapter
         binding.chosenImagesRecyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
     }
-
-//    private fun deleteFromCart(cartPhotoDB: CartPhotoDB) {
-//        viewModel.deleteByItem(cartPhotoDB)
-//    }
 
 }
 
