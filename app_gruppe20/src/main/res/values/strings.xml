@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">artPhoto</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="topText">Bestill innrammede bilder</string>
     <string name="chooseImage">VELG BILDE</string>
     <string name="amountImages">Antall valgte bilder: %1$d</string>
@@ -32,4 +31,8 @@
     <string name="choose_size_toast">Vennligst velg en størrelse.</string>
     <string name="choose_amount_toast">Legg til antall bilder.</string>
     <string name="invalid_quantity_toast">Vennligst velg et antall større enn 0.</string>
+    <string name="choose_picture">Vennligst velg bilder!</string>
+    <string name="cart_is_empty">Handlekurv er tom.</string>
+    <string name="choose_item_to_delete">Velg elementer som skal slettes.</string>
+    <string name="thanks_for_order">Takk for din bestilling!</string>
 </resources>

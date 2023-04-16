@@ -54,11 +54,17 @@ class HomeFragment : Fragment() {
             viewModel.clearPhotos()
             if (!cartIsEmpty()) sendBuyingMessage()
             else {
-                Toast.makeText(requireContext(), "Vennligst velg bilder!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.choose_picture), Toast.LENGTH_SHORT).show()
             }
         }
 
         binding.resetButton.setOnClickListener {
+
+            if (recyclerAdapter.artPhoto.isEmpty()) {
+                Toast.makeText(requireContext(), getString(R.string.cart_is_empty), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             viewModel.clearPhotos()
             recyclerAdapter.artPhoto = mutableListOf()
             binding.TotalPrice.text = getString(R.string.total_price, 0)
@@ -66,6 +72,17 @@ class HomeFragment : Fragment() {
         }
 
         binding.deleteButton.setOnClickListener {
+
+            if (recyclerAdapter.artPhoto.isEmpty()) {
+                Toast.makeText(requireContext(), getString(R.string.cart_is_empty), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (recyclerAdapter.selectedCartPhotos.isEmpty()) {
+                Toast.makeText(requireContext(), getString(R.string.choose_item_to_delete), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val tempCartPhotos = recyclerAdapter.selectedCartPhotos.toMutableList()
             viewModel.deleteSelectedPhotos(tempCartPhotos)
             recyclerAdapter.deleteSelectedItems()
@@ -76,8 +93,6 @@ class HomeFragment : Fragment() {
             madeDelete = true
 
         }
-
-
 
         initViewModel()
         initRecycler()
@@ -110,7 +125,7 @@ class HomeFragment : Fragment() {
         recyclerAdapter.notifyDataSetChanged()
         binding.TotalPrice.text = getString(R.string.total_price, 0)
         binding.AmountImages.text = getString(R.string.amountImages, 0)
-        Toast.makeText(requireContext(), "Takk for din bestilling!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), getString(R.string.thanks_for_order), Toast.LENGTH_SHORT).show()
     }
 
 
@@ -179,5 +194,3 @@ class HomeFragment : Fragment() {
     }
 
 }
-
-
