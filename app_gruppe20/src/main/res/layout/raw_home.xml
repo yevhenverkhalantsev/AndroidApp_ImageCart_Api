@@ -54,6 +54,7 @@
         android:id="@+id/rawCheckBox"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:enabled="false"
         app:layout_constraintTop_toTopOf="@id/image"
         app:layout_constraintBottom_toBottomOf="@id/image"
         app:layout_constraintEnd_toEndOf="parent"

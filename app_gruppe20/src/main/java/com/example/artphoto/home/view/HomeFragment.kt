@@ -1,8 +1,8 @@
 package com.example.artphoto.home.view
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,24 +11,24 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.artphoto.R
+import com.example.artphoto.context.MyApplication
 import com.example.artphoto.databinding.FragmentHomeBinding
 import com.example.artphoto.home.view.recycleradapter.HomeRecyclerView
 import com.example.artphoto.images.model.CartPhoto
 import com.example.artphoto.images.viewmodel.ImagesViewModel
-import com.example.artphoto.images.viewmodel.repository.ArtPhotosApiService
-import com.example.artphoto.images.viewmodel.repository.ImagesRepository
-import com.example.artphoto.room.repository.ArtPhotoDatabase
+import javax.inject.Inject
 
 
 class HomeFragment : Fragment() {
+    @Inject lateinit var viewModel: ImagesViewModel
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: ImagesViewModel
     private lateinit var recyclerAdapter: HomeRecyclerView
     private var madeDelete: Boolean = false
-    private fun initViewModel() {
-        viewModel = ImagesViewModel.getInstance(ImagesRepository(ArtPhotosApiService.getInstance()),
-            ArtPhotoDatabase.getDB(requireContext()))
+
+    override fun onAttach(context: Context) {
+        (requireContext().applicationContext as MyApplication).appComponent.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreateView(
@@ -40,11 +40,10 @@ class HomeFragment : Fragment() {
 
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
-
-
 
         binding.chooseImageButton.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_imagesFragment)
@@ -94,7 +93,6 @@ class HomeFragment : Fragment() {
 
         }
 
-        initViewModel()
         initRecycler()
         setRecyclerData()
     }
@@ -107,16 +105,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun sendBuyingMessage() {
-
-            val intent = Intent(Intent.ACTION_SENDTO).apply {
-                data = Uri.parse("mailto:" + "yve001@uit.no")
-                putExtra(Intent.EXTRA_SUBJECT, "Ordreinformasjon")
-                putExtra(Intent.EXTRA_TEXT, generateMessageBody())
-            }
-        startActivity(intent)
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "message/rfc822"
+            putExtra(Intent.EXTRA_EMAIL, arrayOf("yve001@uit.no"))
+            putExtra(Intent.EXTRA_SUBJECT, "Ordreinformasjon")
+            putExtra(Intent.EXTRA_TEXT, generateMessageBody())
+        }
+        startActivity(Intent.createChooser(intent, "Send epost"))
         reset()
-
     }
+
 
     @SuppressLint("NotifyDataSetChanged")
     private fun reset() {
@@ -150,7 +148,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun setRecyclerData() {
-        requestData()
         viewModel.cart.observe(viewLifecycleOwner) {
             if (it != null) {
                 recyclerAdapter.artPhoto = it
@@ -158,10 +155,6 @@ class HomeFragment : Fragment() {
                 binding.AmountImages.text = getString(R.string.amountImages, countTotalAmount(it))
             }
         }
-    }
-
-    private fun requestData() {
-        viewModel.getAllCartPhotos()
     }
 
     private fun countTotalAmount(cartPhotos: MutableList<CartPhoto>): Int {

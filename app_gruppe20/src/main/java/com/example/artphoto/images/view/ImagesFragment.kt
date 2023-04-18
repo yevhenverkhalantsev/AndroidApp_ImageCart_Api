@@ -1,5 +1,6 @@
 package com.example.artphoto.images.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,25 +8,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.artphoto.R
+import com.example.artphoto.context.MyApplication
 import com.example.artphoto.databinding.FragmentImagesBinding
 import com.example.artphoto.images.view.recyclerview.ImageRecyclerView
 import com.example.artphoto.images.viewmodel.ImagesViewModel
-import com.example.artphoto.images.viewmodel.repository.ArtPhotosApiService
-import com.example.artphoto.images.viewmodel.repository.ImagesRepository
-import com.example.artphoto.room.repository.ArtPhotoDatabase
+import javax.inject.Inject
 
 class ImagesFragment : Fragment() {
-    private lateinit var viewModel: ImagesViewModel
+    @Inject lateinit var viewModel: ImagesViewModel
     private lateinit var recycler: ImageRecyclerView
     private var _binding : FragmentImagesBinding? = null
     private val binding get() = _binding!!
+
+    override fun onAttach(context: Context) {
+        (requireContext().applicationContext as MyApplication).appComponent.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentImagesBinding.bind(view)
 
-
-        initViewModel()
         initRecycler()
         getPhotos()
     }
@@ -38,11 +41,6 @@ class ImagesFragment : Fragment() {
 
             recycler.submitList(it)
         }
-    }
-
-    private fun initViewModel() {
-        viewModel = ImagesViewModel.getInstance(ImagesRepository(ArtPhotosApiService.getInstance()),
-            ArtPhotoDatabase.getDB(requireContext()))
     }
 
     private fun initRecycler() {

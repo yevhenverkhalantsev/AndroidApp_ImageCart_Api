@@ -1,5 +1,6 @@
 package com.example.artphoto.selected.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,20 +10,25 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.artphoto.R
+import com.example.artphoto.context.MyApplication
 import com.example.artphoto.databinding.FragmentSelectedImageBinding
 import com.example.artphoto.images.model.CartPhoto
 import com.example.artphoto.images.model.CartPhotoDB
 import com.example.artphoto.images.model.Frame
 import com.example.artphoto.images.model.Size
+import com.example.artphoto.images.view.ImagesFragment
 import com.example.artphoto.images.viewmodel.ImagesViewModel
-import com.example.artphoto.images.viewmodel.repository.ArtPhotosApiService
-import com.example.artphoto.images.viewmodel.repository.ImagesRepository
-import com.example.artphoto.room.repository.ArtPhotoDatabase
+import javax.inject.Inject
 
 class SelectedImageFragment : Fragment() {
+    @Inject lateinit var viewModel: ImagesViewModel
     private var _binding: FragmentSelectedImageBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: ImagesViewModel
+
+    override fun onAttach(context: Context) {
+        (requireContext().applicationContext as MyApplication).appComponent.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +42,8 @@ class SelectedImageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSelectedImageBinding.bind(view)
 
-        initViewModel()
         initListeners()
+        requestAlbumInfo()
     }
 
     private fun initListeners() {
@@ -113,11 +119,6 @@ class SelectedImageFragment : Fragment() {
         return false
     }
 
-    private fun initViewModel() {
-        viewModel = ImagesViewModel.getInstance(ImagesRepository(ArtPhotosApiService.getInstance()),
-            ArtPhotoDatabase.getDB(requireContext()))
-        requestAlbumInfo()
-    }
 
     private fun requestAlbumInfo() {
         if (viewModel.selectedPhoto == null) {

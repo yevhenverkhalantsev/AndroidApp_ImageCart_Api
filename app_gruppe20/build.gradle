@@ -42,7 +42,11 @@ android {
 
 dependencies {
 
-    // Room dependencies
+    implementation 'com.google.dagger:dagger-android:2.43.2'
+    kapt 'com.google.dagger:dagger-android-processor:2.43.2'
+    kapt 'com.google.dagger:dagger-compiler:2.43.2'
+
+    // Ro om dependencies
     implementation "androidx.room:room-runtime:2.5.1"
     kapt "androidx.room:room-compiler:2.5.1"
     // optional - Kotlin Extensions and Coroutines support for Room

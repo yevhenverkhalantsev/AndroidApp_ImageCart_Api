@@ -1,13 +1,15 @@
 package com.example.artphoto.images.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.artphoto.images.model.*
 import com.example.artphoto.images.viewmodel.repository.ImagesRepository
 import com.example.artphoto.room.repository.ArtPhotoDatabase
 import kotlinx.coroutines.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ImagesViewModel private constructor(
+@Singleton
+class ImagesViewModel @Inject constructor(
     private val repository: ImagesRepository,
     private val cartDatabase: ArtPhotoDatabase): ViewModel() {
 
@@ -29,6 +31,11 @@ class ImagesViewModel private constructor(
 
     }
 
+    init {
+        getAllCartPhotos()
+        getPhotos()
+    }
+
 
     fun getPhotos() {
         viewModelScope.launch {
@@ -42,52 +49,34 @@ class ImagesViewModel private constructor(
         }
     }
 
-    companion object {
-        private var instance: ImagesViewModel? = null
-
-        fun getInstance(repository: ImagesRepository, database: ArtPhotoDatabase): ImagesViewModel {
-            if (instance == null) {
-                instance = ImagesViewModel(repository, database)
-            }
-            return instance!!
-        }
-    }
-
-
     fun clearPhotos() {
-
-        //CoroutineScope()
         viewModelScope.launch {
             cartDatabase.photoDao().deleteAllTables()
             _cart.value?.clear()
-            //@TODO clear cart
         }
     }
 
     fun insertPhoto(cartPhoto: CartPhoto) {
-        CoroutineScope(Dispatchers.IO).launch {
-            cartDatabase.photoDao().insertSize(cartPhoto.size)
+        CoroutineScope(Dispatchers.IO).launch{
+            val insertSize = GlobalScope.async { cartDatabase.photoDao().insertSize(cartPhoto.size) }
+            val insertFrame = GlobalScope.async { cartDatabase.photoDao().insertFrame(cartPhoto.frame) }
+            val insertArtPhoto = GlobalScope.async { cartDatabase.photoDao().insertArtPhoto(cartPhoto.photo) }
+            val insertCartPhoto = GlobalScope.async { cartDatabase.photoDao().insert(cartPhoto.cartPhotoDB) }
+
+            withContext(Dispatchers.Main) {
+                insertSize.await()
+                insertFrame.await()
+                insertArtPhoto.await()
+                insertCartPhoto.await()
+                getAllCartPhotos()
+            }
         }
-        CoroutineScope(Dispatchers.IO).launch {
-            cartDatabase.photoDao().insertFrame(cartPhoto.frame)
-        }
-        CoroutineScope(Dispatchers.IO).launch {
-            cartDatabase.photoDao().insertArtPhoto(cartPhoto.photo)
-        }
-        CoroutineScope(Dispatchers.IO).launch {
-            cartDatabase.photoDao().insert(
-                cartPhoto.cartPhotoDB
-            )
-        }
+
     }
 
     fun getAllCartPhotos() {
         CoroutineScope(Dispatchers.IO).launch {
             cart.postValue(cartDatabase.photoDao().getAllCartPhotos())
-
-//            insertArtPhoto()
-//            insertFrame()
-//            insertSize()
         }
     }
 
@@ -96,15 +85,10 @@ class ImagesViewModel private constructor(
             val ids = mutableListOf<Int>()
             selectedCartPhotos.forEach { ids.add(it.cartPhotoDB.id) }
             cartDatabase.photoDao().deleteSelectedPhotos(ids)
-            //_cart.postValue(cartDatabase.photoDao().getAllCartPhotos())
         }
     }
 
-//    fun deleteByItem(cartPhotoDB: CartPhoto) {
-//        viewModelScope.launch {
-//            cartDatabase.photoDao().deleteById(cartPhotoDB.cartPhotoDB)
-//        }
-//    }
+
 
 
 
