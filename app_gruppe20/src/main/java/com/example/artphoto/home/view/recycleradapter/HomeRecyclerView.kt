@@ -11,6 +11,7 @@ import com.example.artphoto.images.model.CartPhoto
 
 class HomeRecyclerView : RecyclerView.Adapter<HomeViewHolder>() {
     var artPhoto : MutableList<CartPhoto> = mutableListOf()
+        @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -69,7 +70,7 @@ class HomeRecyclerView : RecyclerView.Adapter<HomeViewHolder>() {
     @SuppressLint("NotifyDataSetChanged")
     fun deleteSelectedItems() {
         if (selectedItems.isEmpty()) return
-        selectedCartPhotos.forEachIndexed { index, cartPhoto ->
+        selectedCartPhotos.forEachIndexed { _, cartPhoto ->
             artPhoto.remove(cartPhoto)
         }
         if (selectedItems.size == 1) notifyItemRemoved(selectedItems[0])

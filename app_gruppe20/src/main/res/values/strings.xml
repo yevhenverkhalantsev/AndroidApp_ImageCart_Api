@@ -35,4 +35,7 @@
     <string name="cart_is_empty">Handlekurv er tom.</string>
     <string name="choose_item_to_delete">Velg elementer som skal slettes.</string>
     <string name="thanks_for_order">Takk for din bestilling!</string>
+    <string name="delete_button">Slett</string>
+    <string name="reset_button">Nulstill</string>
+    <string name="amount_photos">Antall</string>
 </resources>

@@ -18,7 +18,6 @@ class ImagesViewModel @Inject constructor(
     var selectedPhoto: ArtPhoto? = null
 
     private val _selectedAlbum = MutableLiveData<ArtAlbum>()
-    val selectedAlbum get() = _selectedAlbum
 
     private val _selectedAuthor = MutableLiveData<ArtArtist>()
     val selectedAAuthor get() = _selectedAuthor

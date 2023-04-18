@@ -16,7 +16,6 @@ import com.example.artphoto.images.model.CartPhoto
 import com.example.artphoto.images.model.CartPhotoDB
 import com.example.artphoto.images.model.Frame
 import com.example.artphoto.images.model.Size
-import com.example.artphoto.images.view.ImagesFragment
 import com.example.artphoto.images.viewmodel.ImagesViewModel
 import javax.inject.Inject
 
@@ -122,7 +121,7 @@ class SelectedImageFragment : Fragment() {
 
     private fun requestAlbumInfo() {
         if (viewModel.selectedPhoto == null) {
-            //@TODO show error message
+            // TODO empty body
         }
         else {
             viewModel.getAlbumWithArtist(viewModel.selectedPhoto!!.albumId)
